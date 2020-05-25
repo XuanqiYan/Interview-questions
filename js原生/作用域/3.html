@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+				function t(age){
+					console.log(age)	 //99
+					var num=5;
+					var age=10;
+					console.log(age)     //10
+				}
+				
+				t(99)
+				/*
+					函数在执行的时候
+					1.词法分析
+						1）. 函数在注册的时候函数内部生成一个活动空对象 active object  (AO)
+							ao = {}
+								
+						2). 函数是否参数，如果有参数会在ao对象上声明一个属性，属性键就是形参，属性的值就是实参
+							ao = {age:99}
+							
+						3). 函数内是否有var声明 
+							如果内部有var 声明，会在ao对象上形成键值对，以变量名作为健 值为undefined
+							注意：如果ao对象上已经存在了该属性，不会对ao对象做任何修改
+							
+							ao = {age:99;num:undefined}
+							
+						4). 函数内时候有子函数声明 略过
+							ao = {age:99;num:undefined}
+							
+						ao对象就是函数在注册阶段形成的作用域对象，以后在函数内使用变量都要从这个ao对象上找	
+							
+					2.执行阶段	
+						console.log(age)	 // 99
+						var num=5;           //  {age:99;num:undefined} -->  {age:99;num:5}
+						var age=10;          //  {age:99;num:5}  --> {age:10;num:5}
+						console.log(age)     // 10 
+				*/			
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>ES6 之前的属性和方法的共享问题</title>
+	</head>
+	<body>
+		<script>
+			var person =  {  // 构造函数.protoype 指向于父对象，而且子对象会继承父对象内的属性和方法 原型对象
+				head:'1个脑袋',
+				eat:function(){
+					console.log('吃饭...')
+				}
+			}	
+			
+			man.prototype = person
+			function man(name){
+				//系统会帮你执行一下操作
+				this.name=name
+				
+			}	
+			
+			var m =  new man('zhangsan')
+			
+			woman.prototype= person
+			
+			function woman (name){
+				this.name = name
+				//重写父类方法
+				this.eat = function(){
+					console.log('XXX')
+				}
+				
+			}
+			
+			var w = new woman('lisi')
+				
+		</script>	
+	</body>
+</html>

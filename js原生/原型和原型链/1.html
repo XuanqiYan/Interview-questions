@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title> js定义变量的三种常用方式</title>
+	</head>
+	<body>
+		<script src='./b.js'></script>
+		<script src='./a.js'></script>
+		<script>
+			//对象定义方式3中
+			//第一种：字面量方式 ，解决变量名冲突问题 
+			var obj = {
+				name:'zhangsan',
+				age:21,
+				test:function(){
+					
+				}
+			}
+			console.log(obj_b.num)	
+		
+			//第二种：构造函数定义
+			function demo(name){
+				//系统会帮你执行一下操作
+				//this = {}
+				this.name=name
+				//this = {__propto__: 原型对象（object）,name:'zhangsan'}
+				//return  this
+			}	
+			
+			var obj1 =  new demo('zhangsan')
+			console.log(obj1)
+			
+			//第三种构造方式
+			var obj2 = new Object()	//系统默认的对象构造函数
+			obj2.name = 'lisi'
+			obj2.test= function(){
+				console.log(this.name)
+			}	
+			
+			obj2.test()
+			
+			
+		</script>	
+	</body>
+</html>

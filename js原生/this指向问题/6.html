@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<ul>
+			<li >1111</li>
+			<li >2222</li>
+			<li >3333</li>
+		</ul>	
+		<script>
+			//给li绑定点击事件，并实现点击哪个li弹出索引 
+			// var lis = document.getElementsByTagName('li')
+			// for(var i =0 ;i <lis.length;i++){
+			// 	lis[i].setAttribute('index',i)
+			// 	lis[i].onclick=function(){
+			// 		console.log(this.getAttribute('index'))
+			// 	}
+			// }	
+			
+		</script>
+		
+		<script>
+			// var lis = document.getElementsByTagName('li')
+			
+			// /*
+			// 	var 声明的变量不具备绑定块级作用域
+			// 	let 声明的变量具备绑定块级作用域
+			// */
+			// for(var i =0 ; i < lis.length; i++){
+			// 	lis[i].onclick=function(){
+			// 		//此时的i不是标签的索引
+			// 		console.log(i)
+			// 	}
+			// }
+			
+		</script>
+		<script>
+			// var lis = document.getElementsByTagName('li')
+			// for(var i =0 ; i < lis.length; i++){
+			// 	(function(index){ //自执行
+			// 		lis[index].onclick=function(){
+			// 			console.log(index)
+			// 		}	
+			// 	})(i)		
+			// }		
+
+		</script>
+		
+		<script>
+			var  ul = document.getElementsByTagName('ul')[0]
+			ul.onclick=function(event){
+				//获取点击的哪个li 
+				event.target.style.backgroundColor='red'
+			}
+			/*事件委托
+				1. 节约不必要的循环
+				2. 如果循环给每一个li 绑定点击事件，事件回调函数实际就是个对象，会存在在内存中 ，这就会浪费内存空间 
+			*/
+		</script>
+		
+		
+		
+	</body>
+</html>

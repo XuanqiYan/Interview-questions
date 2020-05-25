@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>如果是一般函数,this指向于window ,但是如果在严格模式下 指向于undefined</h1>	
+		<script>
+			var age=100	//相当于在window对象注册一个属性age 值就是100 --》 window.age=100
+			function test(){
+				console.log(this.age)
+				console.log(window.age) //window 可以省略
+				console.log(age)  // 如果在函数内部不使用var是全局变量
+			}	
+			//test()
+			
+			function  test1(){
+				//开启严格模式
+				"use strict"
+				console.log(this)
+			}
+			test1()
+		</script>
+		
+	</body>
+</html>

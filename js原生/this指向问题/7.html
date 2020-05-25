@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>ES6的箭头函数内部this没有默认绑定 ，this的绑定取决于箭头函数外部的执行环境中的this</h1>
+		<script>
+			
+			var test = ()=>{
+				console.log(this)
+			}	
+			
+			test()
+			
+			var obj ={
+				age:21,
+				demo:function(){
+					//console.log(this)
+					(()=>{
+						console.log(this)
+					})()
+				}
+					
+			}
+			
+			obj.demo()
+				
+		</script>
+		
+			
+	</body>
+</html>

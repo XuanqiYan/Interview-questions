@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>函数内this 可以在定义函数的静态绑定 bind</h1>	
+		<script>
+			var obj = {age:100}
+			var obj1 = {age:1}
+			var test = function (){
+				console.log(this.age)
+			}.bind(obj1)	
+			
+			//动态绑定
+			test.apply(obj)
+			test()
+			
+			
+		</script>
+		
+	</body>
+</html>

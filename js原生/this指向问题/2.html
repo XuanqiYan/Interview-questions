@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>哪个对象调用函数 ，函数内的this 就指向于这个对象</h1>
+		<script>
+			
+			var obj  = {
+				name:'zhangsan',
+				test:function(){
+					console.log(this.name) //this就指向于obj
+				}
+			}
+	
+			obj.test()
+			
+		</script>	
+	</body>
+</html>

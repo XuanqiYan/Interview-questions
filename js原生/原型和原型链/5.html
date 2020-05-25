@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title> 原型链</title>
+	</head>
+			
+	<body>
+		<script>
+			// a对象的原型 系统对象object
+			
+			function A(){
+				this.a='aa'
+			}
+			var a = new A()	
+		
+			B.prototype  = a 
+			function B(){
+				this.b ='bb'
+			}
+			var b = new B()
+			
+			
+			C.prototype =  b
+			function C(){
+				this.c='cc'
+			}
+			var c = new C()
+			
+			
+			D.prototype = c
+			function D(){
+				this.d='dd'
+			}
+			
+			var d = new D()
+			console.log(d)
+			
+		</script>
+	</body>
+</html>

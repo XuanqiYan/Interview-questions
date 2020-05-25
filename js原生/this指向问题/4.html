@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			div{
+				width:100px;
+				height:100px;
+				float: left;
+				margin-left:10px;				
+			}
+			
+		</style>
+	</head>
+	<body>
+		<h1>函数内的this可以在函数调用的时候动态绑定 call/apply</h1>	
+		<div id='test1'>test1</div>
+		<div id='test2'>test2</div>	
+		
+		<script>
+			var  t1 =  document.getElementById('test1')
+			var  t2 =  document.getElementById('test2')
+			
+			function color(c,w){
+				//console.log(this)
+				this.style.backgroundColor=c
+				this.style.width=w
+			}
+			
+			var arr =['yellowgreen','200px']
+			//color.call(t1,'red','200px')
+			color.call(t1,...arr)
+			color.apply(t2,['pink','400px'])
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			var age=99
+			function t(age){
+				console.log(age)
+			}
+			t(5)
+			
+			/*
+				函数在执行的时候
+				1.词法分析
+					1）. 函数在注册的时候函数内部生成一个活动空对象 active object  (AO)
+						ao = {}
+							
+					2). 函数是否参数，如果有参数会在ao对象上声明一个属性，属性键就是形参，实参作为属性的值
+						ao = {age:5}
+						
+					3). 函数内是否有var声明 略过
+						ao = {age:5}
+						
+					4). 函数内时候有子函数声明 略过
+						ao = {age:5}
+						
+					ao对象就是函数在注册阶段形成的作用域对象，以后在函数内使用变量都要从这个ao对象上找	
+						
+				2.执行阶段	
+					console.log(age)  --》 5
+			
+			*/
+			
+		</script>	
+	</body>
+</html>

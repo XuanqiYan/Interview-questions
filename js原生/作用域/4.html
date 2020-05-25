@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function t(greet){
+				console.log(greet) 
+				function demo(){
+					alert('xxxx')
+				}
+				function greet(){
+					alert('oooo')
+				}
+				
+			}	
+			t(3)
+			/*
+				函数在执行的时候
+				1.词法分析
+					1）. 函数在注册的时候函数内部生成一个活动空对象 active object  (AO)
+						ao = {}
+							
+					2). 函数是否参数，如果有参数会在ao对象上声明一个属性，属性键就是形参，属性的值就是实参
+						ao = {greet:3}
+						
+					3). 函数内是否有var声明  略过
+						ao = {greet:3}
+							
+					4). 函数内时候有子函数声明 
+						有子函数，在ao对象上添加一个健值对名，会以函数名作为健，函数体作为值
+						注意：如果说函数名已经存在，将之前的greet的值赋值为greet函数体	
+						ao = { greet:function(){alert('oooo')}; demo:function(){alert('xxxx')}}
+						
+					ao对象就是函数在注册阶段形成的作用域对象，以后在函数内使用变量都要从这个ao对象上找	
+						
+				2.执行阶段	
+					console.log(greet)  // function(){alert('oooo')}
+			*/	
+			
+		</script>
+	</body>
+</html>

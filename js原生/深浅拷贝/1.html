@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			/*
+				基本类型
+				nudefined null boolean string num   = 赋值 拷贝赋值 改变其中一个不会影响另一个
+				
+				特俗类型
+				array object   = 赋值 就是引用赋值（两个变量指向同一个值） 
+			*/	
+	// 拷贝赋值	 
+	  
+		   var str = 'abc'
+		   var str1 = str
+		   
+		   str1[0] = 'A'
+		   console.log(str) // abc
+		   
+		   var num  =10;
+		   var num1 = num
+		   num++
+		   console.log(num1) //10
+		   
+	// 引用赋值
+		   
+		   var arr = [1,2,3]
+		   var arr1 = arr
+		   arr1[0] = 10
+		   console.log(arr) //[10,2,3]
+		   
+		   
+		   var obj = { name:'zhangsan'}
+		   var obj1 = obj 
+		   obj1.name='lisi'
+		   console.log(obj)
+		   
+	//  基本类型是比较值
+		var a=1 
+		var b=1
+		console.log(a===b) // true	类型相同 值也相同  
+		//console.log(a==b)  // true  类型可以不同， 转化成同类型比较 ，比较值
+		
+	// 特俗类型是比较指针	
+	
+		var arr = [1,2,3]
+		var arr1 = [1,2,3]
+		console.log(arr===arr1) //false
+		</script>	
+	</body>
+</html>

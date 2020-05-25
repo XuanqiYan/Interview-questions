@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+		
+			var obj1 = {
+				name:'zhangsan',
+				age:18,
+				hobby:['eat','sleep']
+			}	
+			
+			//浅拷贝
+			function qiankaobei(obj){
+				var obj_= {}
+				for (var o in obj){
+					obj_[o]=obj[o] //遍历hobby 属性的时候 是引用赋值
+				}
+				return obj_
+			}
+			
+			var obj2  = qiankaobei(obj1)
+			//console.log(obj1)
+			//console.log(obj2)
+			obj2.name='lisi' // 不会影响obj1
+			obj2.hobby[0]='EAT' // 会影响obj1
+			
+			console.log(obj1)
+			
+		</script>	
+	</body>
+</html>

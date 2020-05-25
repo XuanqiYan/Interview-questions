@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+				/*
+				产生闭包的条件
+					1.函数内部有一个局部变量
+					2 函数内部有子函数，而且子函数必须使用上层函数的局部变量
+					3.函数内部将子函数返回赋值给一个全局变量
+				*/
+				function demo(){
+					var num = 10 //局部变量
+					return function (){
+						num++
+						console.log(num)
+					}	
+				}
+				//d 变量是一个全局变量  生命周期是在脚本不刷新就一直存在在内存中
+				var d = demo()
+				d() //11
+				d() //12
+				d() //13
+				
+				
+		</script>	
+	</body>
+</html>

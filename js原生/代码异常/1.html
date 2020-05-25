@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>代码异常</h1>
+		<script>
+			//console.log(age)
+			//运行时候产生的逻辑错误 或者是语法错误 都可以使用异常来捕获的 
+			try{ //监听
+				console.log(age) //语法错误
+				
+				// 	var num =1
+				// 	//.... 运算 num 
+				// 	if(num>1){
+				// 		console.log('程序正常')
+				// 	}else{
+				// 		//程序错误
+				// 		throw new Error('num 代码错误')	 // throw 代表手动抛出一个异常对象
+				// 	}
+			}catch(error){ //捕获异常
+				console.log(error)
+				console.log('num 变量没有定义')
+				//代码修改
+				//var num=2
+			}
+			// 只要程序执行到这里 num 的值必定大于1 
+			//console.log(num)	
+		</script>
+	</body>
+</html>

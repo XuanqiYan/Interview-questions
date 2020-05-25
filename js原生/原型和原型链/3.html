@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title> ES6 class 实现不同对象的属性和方法的共享问题</title>
+	</head>
+	<body>
+		<script>
+			class DEMO {
+				constructor() {
+				    this.num=100
+				}
+				test(){
+					console.log('这是父类的test')
+				}
+				
+			}	
+			class demo extends DEMO {
+				constructor(name) {
+					super() // 调用父类的构造方式
+				    this.name =name
+				}
+				
+			}
+			
+			class demo1 extends DEMO{
+				
+			}
+			var d =  new demo('zhangsan')
+				
+		</script>
+	</body>
+</html>
