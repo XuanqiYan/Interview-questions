@@ -45,8 +45,8 @@ class List extends React.PureComponent {
                 <span>{item.title}</span>
             </li>
         })}</ul>
-    }
-    shouldComponentUpdate() {/*浅比较*/}
+    } {/*浅比较*/}
+    shouldComponentUpdate()
 }
 // props 类型检查
 List.propTypes = {

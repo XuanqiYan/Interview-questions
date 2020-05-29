@@ -18,19 +18,19 @@ class Mouse extends React.Component {
       return (
         <div style={{ height: '500px' }} onMouseMove={this.handleMouseMove}>
             {/* 将当前 state 作为 props ，传递给 render （render 是一个函数组件） */}
-            {this.props.render(this.state)}
+            {this.props.xxxx(this.state)}
         </div>
       )
     }
 }
 Mouse.propTypes = {
-    render: PropTypes.func.isRequired // 必须接收一个 render 属性，而且是函数
+    xxxx: PropTypes.func.isRequired // 必须接收一个 render 属性，而且是函数
 }
 
 const App = (props) => (
     <div style={{ height: '500px' }}>
-        <p>{props.a}</p>
-        <Mouse render={
+		<p>{props.a}</p>
+        <Mouse xxxx={
             /* render 是一个函数组件 */
             ({ x, y }) => <h1>The mouse position is ({x}, {y})</h1>
         }/>
@@ -38,9 +38,6 @@ const App = (props) => (
     </div>
 )
 
-/**
- * 即，定义了 Mouse 组件，只有获取 x y 的能力。
- * 至于 Mouse 组件如何渲染，App 说了算，通过 render prop 的方式告诉 Mouse 。
- */
+
 
 export default App

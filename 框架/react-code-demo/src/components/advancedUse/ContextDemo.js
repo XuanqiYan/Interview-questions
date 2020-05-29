@@ -1,13 +1,13 @@
 import React from 'react'
 
 // 创建 Context 填入默认值（任何一个 js 变量）
-const ThemeContext = React.createContext('light')
+const ThemeContext = React.createContext()
 
 // 底层组件 - 函数是组件
 function ThemeLink (props) {
     // const theme = this.context // 会报错。函数式组件没有实例，即没有 this
 
-    // 函数式组件可以使用 Consumer
+    // 函数式组件使用 Consumer(消费)
     return <ThemeContext.Consumer>
         { value => <p>link's theme is {value}</p> }
     </ThemeContext.Consumer>
@@ -58,3 +58,9 @@ class App extends React.Component {
 }
 
 export default App
+
+/*
+	context react框架自身实现对于组件传值的问题 
+	1.父组件使用提供器提供某一个属性，父组件内部的所有子组件都能消费父组件提供的属性
+	2.子组建如果是class和函数组件消费方式不一样 
+*/

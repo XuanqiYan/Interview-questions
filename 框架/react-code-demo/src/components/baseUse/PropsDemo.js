@@ -65,21 +65,23 @@ class Footer extends React.Component {
     render() {
         return <p>
             {this.props.text}
-            {this.props.length}
+			
         </p>
     }
+	//完成更新
     componentDidUpdate() {
         console.log('footer did update')
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.text !== this.props.text
-            || nextProps.length !== this.props.length) {
-            return true // 可以渲染
-        }
-        return false // 不重复渲染
-    }
+	// 生命周期钩子 是否需要更新 false 不跟新 true（默认） 跟新 
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     if (nextProps.text !== this.props.text
+    //         || nextProps.length !== this.props.length) {
+    //         return true // 可以渲染
+    //     }
+    //     return false // 不重复渲染
+    // }
 
-    // React 默认：父组件有更新，子组件则无条件也更新！！！
+    // React 默认：父组件有更新，子组件则无条件更新！！！
     // 性能优化对于 React 更加重要！
     // SCU 一定要每次都用吗？—— 需要的时候才优化
 }
@@ -110,7 +112,7 @@ class TodoListDemo extends React.Component {
         return <div>
             <Input  submitTitle={this.onSubmitTitle}/>
             <List list={this.state.list}/>
-            <Footer text={this.state.footerInfo} length={this.state.list.length}/>
+            <Footer text={this.state.footerInfo} />
         </div>
     }
     onSubmitTitle = (title) => {

@@ -15,9 +15,12 @@ class App extends React.Component {
     }
     onIncrease = () => {
         this.setState({
-            count: this.state.count + 1
+            count: this.state.count
         })
     }
+	componentDidUpdate() {
+	    console.log(' did update')
+	}
     // 演示 shouldComponentUpdate 的基本使用
     shouldComponentUpdate(nextProps, nextState) {
         if (nextState.count !== this.state.count) {

@@ -1,6 +1,6 @@
 import React from 'react'
 
-// 高阶组件
+// 高阶(函数)组件 
 const withMouse = (Component) => {
     class withMouseComponent extends React.Component {
         constructor(props) {
@@ -24,18 +24,19 @@ const withMouse = (Component) => {
             )
         }
     }
+	//被封装后的业务组件 
     return withMouseComponent
 }
 
 const App = (props) => {
-    const a = props.a
+    
     const { x, y } = props.mouse // 接收 mouse 属性
     return (
         <div style={{ height: '500px' }}>
             <h1>The mouse position is ({x}, {y})</h1>
-            <p>{a}</p>
+			<p>{props.a}</p>
         </div>
     )
 }
 
-export default withMouse(App) // 返回高阶函数
+export default withMouse(App) // 返回高阶函数组件封装后的APP
