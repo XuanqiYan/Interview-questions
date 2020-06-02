@@ -196,6 +196,8 @@
 		
 		
 	面试题：异步渲染 提升性能
+
+----------------------------------------------------------------------------------	
 	
 		
 ### react 
@@ -275,10 +277,10 @@
 						store.subscribe(callback)
 			2 reducer 是一个纯函数
 				有固定输入就有固定的输出，没有任何负作用
-				不会修改原始的store ，对store做深拷贝，针对拷贝的出来的副本做修改
+				不会修改原始的store ，对store做深拷贝，针对拷贝的出来的副本做修改，
+				否则直接修改原始store 就是函数的副作用 因为违背了react 使用不可变值的原则
+				
 							
-					
-					
 		react-thunk 中间件 （能借助react-thunk中间件 能解决异步action 的问题 ）
 			
 			没有react-thunk时，组件 disptach(action)修改store ,action只能接受对象
@@ -299,13 +301,42 @@
 					组件不需要subscribe订阅了 ，就能从props上获取到修改后的store数据
 					
 				mapDispatchToProps参数的意思是让业务组件，提交store中的那些action
-				
+
 		
-		异步action
-		
-		中间件
-		
+### react 原理
+	#### jsx 本质是什么 ？
+		jsx就是react中的模板 ，模板也需要编译 （模板-->js代码）
+			vue模板编译是使用vue-template-compiler ，编译后是render函数
+			jsx是利用babel环境集成了对jsx编译，编译后也是render函数 
 			
+		// jsx 模板编译
+		const imgElement = <div>
+		      <p>xxx</p>
+		      <image src='{imgurl}' />
+		      </div>	
+				  
+		//编译后 render函数
+			function  render(){
+				// React.createElement 类似于vue中的 h函数  
+				return React.createElement("div", null,
+					React.createElement("p", null, "xxx"), 
+					React.createElement("image", {src: "{imgurl}"})
+				);
+			}	
+			
+		// render 函数在执行的时候 vdom		  
+				  
+			
+	
+				
+			
+			
+			
+		
+				
+			
+		
+					
 		 
 		 
 		 
