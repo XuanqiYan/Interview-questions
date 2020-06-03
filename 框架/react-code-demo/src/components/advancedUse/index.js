@@ -7,8 +7,8 @@ import React from 'react'
 //import SCUDemo2 from './SCUDemo2'
 // import PureComponentDemo from './PureComponentDemo'
 //import HOCDemo from './HOCDemo'
-import RenderPropDemo from './RenderPropDemo'
-
+//import RenderPropDemo from './RenderPropDemo'
+import JsxDemo from './JsxDemo.js'
 class AdvancedUse extends React.Component {
     constructor(props) {
         super(props)
@@ -23,7 +23,9 @@ class AdvancedUse extends React.Component {
             {/*<SCUDemo2/>*/}
             {/* <PureComponentDemo/> */}
             {/* <HOCDemo a='100'/>*/}
-            <RenderPropDemo a='200' />
+            {/*<RenderPropDemo a='200' />*/}
+			
+			<JsxDemo />
         </div>
     }
 }

@@ -311,25 +311,76 @@
 			
 		// jsx 模板编译
 		const imgElement = <div>
-		      <p>xxx</p>
-		      <image src='{imgurl}' />
+				  <p>xxx</p>
+				  <image src='{imgurl}' />
 		      </div>	
 				  
 		//编译后 render函数
 			function  render(){
 				// React.createElement 类似于vue中的 h函数  
 				return React.createElement("div", null,
-					React.createElement("p", null, "xxx"), 
-					React.createElement("image", {src: "{imgurl}"})
+					[
+						React.createElement("p", null, "xxx"), 
+						React.createElement("image", {src: "{imgurl}"}
+					]
+					)
 				);
 			}	
 			
-		// render 函数在执行的时候 vdom		  
-				  
-			
+		// render 函数在执行的时候 虚拟dom （vnode）	
+			  
+		// patch(el,vnode)	
+		
+	### react 中的事件合成
+		1. react中的事件都是挂载到document上的
+		2. event 对象不是原生的 ，而是使用SyntheticEvent 构造函数创建的 对象，就是事件合成对象，模拟了原生事件对象的所有行为
+		3. 和vue的事件不同，也和原生的dom事件不同
+		
+		优点：
+			1.由于react封装了原生的事件对象，所以具有更好的兼容性和跨平台
+			2.所有的事件都统一挂载到document 上， ，减少了内存消耗，避免频繁绑定（事件委托）
+			3.对于事件的管理有统一入口，react就会事件统一管理
 	
-				
+	
+	### setState 和 betchUpdate 机制
+		setState (普通使用)可能异步  （setTimeout,自定义事件）可能是同步	
+		setState （对象形式）可能会被合并  （函数形式）可能不会被合并
+		
+	面试题：react在执行setState的时候 同步和异步如何选择？	
+		setState的执行流程 
+			1. this.setState()押入到一个pending队列中，react会维护这个队列 ，
+				按照队列的特性执行内部的this.setState() 操作
+			2. 在具体执行每一次this.setState()设置的时候 看是否处于 betchUpdate 机制，
+				如果处于就是异步 暂缓更新，如果不处于 就是同步立即执行跟新
+						
+		betchUpdate 机制
+			react 方法在执行的时候
 			
+				init--> isbetchUpdate = true
+					
+					anyMethods(){ //执行方法
+					
+						//setTimeout(()=>{
+						//	this.setState()//同步
+						//},1000)
+						
+						//this.setState() // 异步
+						
+						
+						//那么在执行的时候会判断是否处于betchUpdate 机制
+						
+						if(isbetchUpdate==true){
+							
+							//处于betchUpdate机制 异步执行
+						}else{
+							
+							//不处于betchUpdate机制 同步执行	
+						}
+						
+					}
+					
+					
+				close--> isbetchUpdate = false
 			
 			
 		

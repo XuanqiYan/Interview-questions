@@ -66,7 +66,7 @@ class EventDemo extends React.Component {
     clickHandler3 = (event) => {
         event.preventDefault()  // 阻止默认行为
         //event.stopPropagation() // 阻止冒泡
-        //console.log('target', event.target) // 事件在哪个元素上监听的，即当前元素触发
+        //console.log('target', event.target) // 事件在哪个元素上监听的
         //console.log('current target', event.currentTarget) // 事件在哪个元素上触发的 ，假象！！！
 
         // 注意:event 其实是 React 封装的, 可以看 __proto__.constructor 是 SyntheticEvent 组合事件
