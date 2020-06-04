@@ -381,8 +381,31 @@
 					
 					
 				close--> isbetchUpdate = false
+				
+		什么场景能命中betchupdate机制
+			1. 	生命周期 和 它内部调用的函数
+				通过react方式 注册事件 和事件的回调 
+				这两种情况都能命中betchupdate机制
+				这两种情况都是走react 入口，都能都react 统一管理，都能命中betchupdate机制 ，一般都是异步	
+			
+			2.	自定义事件 和 事件内调用的函数
+				setTimeout setInterval 和内部调用的函数 
+				这两种情况和react 没有关系 ，不会被react统一管理，都不能命中betchupdate机制，一般都是同步
+				
 			
 			
+	面试题：react组件初次渲染的执行流程
+		1: jsx模板编译render函数 （在开发环境下,只编译一次）
+		2: 执行render函数，会触发响应式，监听data中属性的getter 和 setter
+		3. 将render产生的虚拟dom (vnode) 使用patch(elm,vnode) 生成真实dom ，并挂载浏览器
+			
+		
+	面试题：组件跟新数据重新渲染视图的流程
+		1: 修改data中的属性 触发setter (此前在getter中已经被监听的属性)
+		2: 重新执行render函数（不需要重新编译）会产生新的虚拟dom (newVnode)
+		3: patch(vnode,newVnode),内部根据diff算法比较两个虚拟dom的最小差异，根据最小差异跟新视图		
+		
+		
 		
 				
 			
