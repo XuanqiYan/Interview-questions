@@ -8,8 +8,9 @@ const { srcPath, distPath } = require('./paths')
 module.exports = smart(webpackCommonConf, {
     mode: 'production',
     output: {
-        // filename: 'bundle.[contentHash:8].js',  // 打包代码时，加上 hash 戳
-        filename: '[name].[contentHash:8].js', // name 即多入口时 entry 的 key
+		//2.出口js文件名重写，两个出口文件不能重名 [name] 是依赖于entry 的 key生成 
+        // filename: 'bundle.[contentHash:8].js',  // hash的意义是代码不变时命中缓存 
+        filename: '[name].[contentHash:8].js',
         path: distPath,
         // publicPath: 'http://cdn.abc.com'  // 修改所有静态文件 url 的前缀（如 cdn 域名），这里暂时用不到
     },
@@ -36,7 +37,7 @@ module.exports = smart(webpackCommonConf, {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(), // 会默认清空 output.path 文件夹
+        new CleanWebpackPlugin(), // 每次build 会默认清空output.path(dist)原始文件夹内容
         new webpack.DefinePlugin({
             // window.ENV = 'production'
             ENV: JSON.stringify('production')

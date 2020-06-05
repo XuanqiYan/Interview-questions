@@ -88,9 +88,9 @@ module.exports = smart(webpackCommonConf, {
                 // 第三方模块
                 vendor: {
                     name: 'vendor', // chunk 名称
-                    priority: 1, // 权限更高，优先抽离，重要！！！
-                    test: /node_modules/,
-                    minSize: 0,  // 大小限制
+                    priority: 1, // 权限更高，优先抽离，重要！！！第三方模块也作为公共模块被引用多次，那么这个第三方模块是拆分到vendor还是下面的common中，权重1>0 ,是拆分到vendor中 
+                    test: /node_modules/,// 第三方模块一般都在/node_modules/目录下，如果不在这个目录下的第三方模块不处理
+                    minSize: 0,  // 大小限制 有些包的体积非常小,不需要拆分出来，拆分出来反而增加包的引用层次，直接放在原始js中性能更好
                     minChunks: 1  // 最少复用过几次
                 },
 

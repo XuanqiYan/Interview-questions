@@ -55,8 +55,83 @@ webpack 基础 （webpack-demo）
 		},	
 		
 		
+	6.	样式打包
+		样式文件分类：
+			css 
+			预编译器 
+				.less .sass .stylus，具备程序特性（变量 流程控制 函数调用），对不同内核浏览器对兼容性问题
 		
+		import './css/a.css' --> （css-loader）转化成webpack js有效模块  --> style-loader转化成dom元素前去嵌入到html文件中
+		import './css/a.less' --> less-loader 转化成css --> （css-loader）转化成webpack js有效模块  --> style-loader转化成dom元素前去嵌入到html文件中
 
+	7. 图片解析
+		file-loader 解析图片资源
+		
+		开发阶段不需要将图片 做base64转化，只要使用http请求图片资源即可
+		但是
+		线上环境，对于较小的图片 做base64转化 ，不会发送http请求 
+		
+		rules: [
+		    // 图片 - 考虑 base64 编码的情况
+		    {
+		        test: /\.(png|jpg|jpeg|gif)$/,
+		        use: {
+		            loader: 'url-loader',
+		            options: {
+		                // 小于 5kb 的图片用 base64 格式产出
+		                // 否则，依然延用 file-loader 的形式，产出 url 格式
+		                limit: 5 * 1024,
+		                // 打包到 img 目录下
+		                outputPath: '/img1/', 
+		                // 设置图片的 cdn 地址（也可以统一在外面的 output 中设置，那将作用于所有静态资源）
+		                // publicPath: 'http://cdn.abc.com'
+		            }
+		        }
+		    },
+		]
+		
+	8. 多页面应用 （多入口多出口） vs 单页面应用 （单一入口 单一出口）
+		区分页面应用和多页面应用
+		/*
+			单页面应用（SPA）
+					通俗一点说就是指只有一个主页面的应用，浏览器一开始要加载所有必须的 html, js, css
+					所有的页面内容都包含在这个所谓的主页面中。
+					在交互的时候由路由程序动态载入，单页面的页面跳转，仅刷新局部资源
+			
+			多页面（MPA）
+				就是指一个应用中有多个页面，页面跳转时是整页刷新
+	
+		*/	
+		有两个入口js 
+			/src/index.js  -->index.js
+			/src/other.js  -->other.js
+			
+		1.配置多个入口
+			entry: {
+			    index: path.join(srcPath, 'index.js'),
+			    other: path.join(srcPath, 'other.js')
+			},
+		2.配置多个出口	  设置针对每一个页面的plugin
+		     // 多入口 - 生成 index.html
+		     new HtmlWebpackPlugin({
+		         template: path.join(srcPath, 'index.html'),
+		         filename: 'index.html',
+		         // chunks 表示该页面要引用哪些 chunk （即上面的 index 和 other），默认全部引用
+		         chunks: ['index']  // 只引用 index.js 不写的话会把entry的两个入口都引入
+		     }),
+		     // 多入口 - 生成 other.html
+		     new HtmlWebpackPlugin({
+		         template: path.join(srcPath, 'other.html'),
+		         filename: 'other.html',
+		         chunks: ['other']  // 只引用 other.js
+		     })
+		3.	对于线上需要区分两个
+			output: {
+				//3.出口js文件名重写，两个出口文件不能重名 [name] 是依赖于entry 的 key生成 
+			    filename: '[name].[contentHash:8].js',
+			    path: distPath, 
+			}
+		
 面试题：
 	1.前端项目为何进行打包和构建
 	2.对于webpack而言 module chunk bundle 有何区别 ？
