@@ -29,7 +29,14 @@ module.exports = {
             template: path.join(srcPath, 'index.html'),
             filename: 'index.html',
             // chunks 表示该页面要引用哪些 chunk （即上面的 index 和 other），默认全部引用
-            chunks: ['index']  // 只引用 index.js
+            chunks: ['index'],  // 只引用 index.js
+			minify: {
+				removeComments: true,//清理html中的注释
+				collapseWhitespace:true ,//清理html中的空格、换行符
+				removeEmptyElements:true ,//清理内容为空的元素
+				removeScriptTypeAttributes:true, // 去掉script标签的type属性
+				removeAttributeQuotes:true ,//去除引号
+			}
         }),
         // 多入口 - 生成 other.html
         new HtmlWebpackPlugin({

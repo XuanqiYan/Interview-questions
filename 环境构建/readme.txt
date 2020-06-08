@@ -36,6 +36,11 @@ webpack 基础 （webpack-demo）
 			  "dev": "webpack-dev-server --config build-base-conf/webpack.dev.js",
 			  "build": "webpack --config build-base-conf/webpack.prod.js"
 			},
+			/*
+				webpack --config 手动指定打包运行的配置文件 
+				如果没有有 config 选项 默认/webpack.config.js
+			*/	
+			
 			
 		执行 :
 			npm run dev 或 yarn dev，
@@ -131,7 +136,55 @@ webpack 基础 （webpack-demo）
 			    filename: '[name].[contentHash:8].js',
 			    path: distPath, 
 			}
-		
+			
+	9.如果在产出chunk文件名中 加hash，浏览器可能会命中缓存
+	
+	10.css的抽离和压缩
+		为什么要css抽离？
+			1.dev 不需要抽离，为了方便调试代码， prod 需要抽离
+			2.不抽离在js中，js执行是有顺序的,只有在执行js的时候才会设置dom样式，可能造成抖屏等现象
+		抽离：	
+			1.下载mini-css-extract-plugin  并导入
+				const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+			2.替换style-loader 为 MiniCssExtractPlugin.loader
+				{
+					test: /\.css$/,
+					loader: [
+						MiniCssExtractPlugin.loader,  // 注意，这里不再用 style-loader
+						'css-loader',
+						'postcss-loader'
+					]
+				}
+			3.指定抽离的css位置和文件名
+				
+				new MiniCssExtractPlugin({
+					filename: 'css/main.[contentHash:8].css' --》 /dist/css/mian.xxxxxxxx.css
+				})
+		压缩：
+			1.下载插件并导入
+				const TerserJSPlugin = require('terser-webpack-plugin')
+				const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+			2.
+				optimization: {
+					// 压缩 css
+					minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+				}
+	11.html压缩
+		minify: {
+			removeComments: true,//清理html中的注释
+			collapseWhitespace:true ,//清理html中的空格、换行符
+			removeEmptyElements:true ,//清理内容为空的元素
+			removeScriptTypeAttributes:true, // 去掉script标签的type属性
+			removeAttributeQuotes:true ,//去除引号
+		}
+	12 js的压缩 webpack4.0 内置了 
+			mode:development /none 不会自动压缩的
+			mode:production  会自动压缩
+		问题：如果在 	development /none 模式下手动开启压缩方式？
+			
+		 
+				
+			
 面试题：
 	1.前端项目为何进行打包和构建
 	2.对于webpack而言 module chunk bundle 有何区别 ？
@@ -140,7 +193,7 @@ webpack 基础 （webpack-demo）
 	5.webpck 如何优化打包效率，如何优化项目运行效率？
 	6.babel-polyfill 和 babel-runtime 模式有何区别？
 	
-	
+
 	
 	
 	

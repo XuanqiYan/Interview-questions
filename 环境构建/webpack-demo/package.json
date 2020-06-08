@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devBuild": "webpack --config build-multi-entry/webpack.dev.js",
-    "dev": "webpack-dev-server --config build-multi-entry/webpack.dev.js",
-    "build": "webpack --config build-multi-entry/webpack.prod.js"
+    "devBuild": "webpack --config build-min-extract-css/webpack.dev.js",
+    "dev": "webpack-dev-server --config build-min-extract-css/webpack.dev.js",
+    "build": "webpack --config build-min-extract-css/webpack.prod.js"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.15",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "uglifyjs-webpack-plugin": "^2.2.0"
   }
 }

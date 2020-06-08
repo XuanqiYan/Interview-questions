@@ -17,8 +17,41 @@ import imgfile1 from  './img/1.png'
 import imgfile2 from  './img/2.jpeg'
 insertDom(imgfile1)
 
-
 insertDom(imgfile2)
+
+console.log('index change')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

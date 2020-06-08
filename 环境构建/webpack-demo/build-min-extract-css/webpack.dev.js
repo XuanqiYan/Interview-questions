@@ -34,8 +34,12 @@ module.exports = smart(webpackCommonConf, {
         new webpack.DefinePlugin({
             // window.ENV = 'production'
             ENV: JSON.stringify('development')
-        })
-    ],
+        }),
+		
+		
+    ]
+	
+	
     devServer: {
         port: 8080,
         progress: true,  // 显示打包的进度条
