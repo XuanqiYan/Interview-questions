@@ -1,7 +1,4 @@
-/**
- * @description 常用文件夹路径
- * @author 双越
- */
+
 
 const path = require('path')
 

@@ -177,17 +177,80 @@ webpack 基础 （webpack-demo）
 			removeScriptTypeAttributes:true, // 去掉script标签的type属性
 			removeAttributeQuotes:true ,//去除引号
 		}
-	12 js的压缩 webpack4.0 内置了 
+	12.js的压缩 webpack4.0 内置了 
 			mode:development /none 不会自动压缩的
 			mode:production  会自动压缩
-		问题：如果在 	development /none 模式下手动开启压缩方式？
+		问题：如果在 	development 模式下手动开启压缩方式？
+			//1.导入webpack内置的插件	
+			const uglifyjs = require('uglifyjs-webpack-plugin');
 			
-		 
+			//2.使用
+			plugins: [
+				....
+				new uglifyjs()
+			]
+			
+	13. 抽离公共代码（build-splitChunks）
+		场景1:
+			如果	SPA应用，在index.js打包入口会引入大量第三方插件，每次更改业务代码，
+			这些第三方插件随着重新打包 ，往往插件体积较大，重复打包的效率不是很高，造成打包速度的性能浪费
+		场景2:
+			对于MPA应用，每个都引入的三方插件 ，每次在构建的时候第三方包会被构建多次，性能浪费
+		场景3:
+			如果工具类函数库，被多个业务模块所引用，那么这个公共的函数库要单独打包
+				
+		合理的做法：
+			把第三方或者是公共的代码快包抽离出去，单独打包，第三方包只会被构建一次
+			optimization:{
+				splitChunks: {
+					chunks: 'all',
+					/**
+					 *  initial 入口 chunk，对于异步导入的文件不处理
+						async 异步 chunk，只对异步导入的文件处理
+						all 不管同步还是异步导入的模块都会被集成进来 （一般情况下）
+					 */
+					// 缓存分组
+					cacheGroups: {
+						// 第三方模块
+						vendor: {
+							name: 'vendor', // chunk 名称
+							priority: 1, //权重，如果一个第三方模块被引用多次，那么这个第三方模块到底是集成到哪个chunk,由于权重1>0,第三方模块被集成到vendor这个chunk中
+							test: /node_modules/,//一般第三方模块都放到node_modules，如果第三方模块不是处于node_modules文件夹，就不会被集成进来
+							minSize: 0,  //包的体积大小，3-5kb,超过了标准会被集成进来，如果chunk进来放问层次复杂，反而不利于代码优化
+							minChunks: 1 //包被引用的次数，第三方只要被引用一次就会被chunk进来，对于公共模块使用2次以上才被chunk进来
+						},
+						// 公共的模块
+						common: {
+							name: 'common', // chunk 名称
+							priority: 0, // 优先级
+							minSize: 0,  // 公共模块的大小限制
+							minChunks: 2  // 公共模块最少复用过几次
+						}
+						....
+					}
+				}	
+			}	
+		
+				
 				
 			
 面试题：
 	1.前端项目为何进行打包和构建
 	2.对于webpack而言 module chunk bundle 有何区别 ？
+	
+		module：在webpack 中任何文件皆为模块，
+			比如：导入的css 图片，字体文件 ，自定义的模块，第三方插件，自定义组件 都是模块
+			
+		chunk: 根据模块的依赖，按照一定的逻辑，将依赖的每个模块组织起来的产物 就是chunk,
+			一般而言chunk 都在内存中（缓存）
+			chunk产生的方式：
+				1. entry
+				2. import() //异步加载的模块也会生成chunk
+				3. splitChunk	
+				
+		dundle : 把内存中的chunk 以文件的方式输出，这个文件就是bundle 
+			（内存-》形成文件写入磁盘）		
+			
 	3.loader 和 pulgin 有和区别？
 	4.webpack 怎么实现懒加载？
 	5.webpck 如何优化打包效率，如何优化项目运行效率？

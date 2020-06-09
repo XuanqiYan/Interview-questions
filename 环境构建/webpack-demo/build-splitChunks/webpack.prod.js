@@ -80,7 +80,7 @@ module.exports = smart(webpackCommonConf, {
             /**
              * initial 入口 chunk，对于异步导入的文件不处理
                 async 异步 chunk，只对异步导入的文件处理
-                all 全部 chunk
+                all 不管同步还是异步导入的模块都会被集成进来 （一般情况下）
              */
 
             // 缓存分组

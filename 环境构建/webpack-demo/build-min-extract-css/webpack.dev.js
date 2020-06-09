@@ -4,6 +4,8 @@ const webpackCommonConf = require('./webpack.common.js')
 const { smart } = require('webpack-merge')
 const { srcPath, distPath } = require('./paths')
 
+const uglifyjs = require('uglifyjs-webpack-plugin');
+
 module.exports = smart(webpackCommonConf, {
     mode: 'development',
     module: {
@@ -35,9 +37,9 @@ module.exports = smart(webpackCommonConf, {
             // window.ENV = 'production'
             ENV: JSON.stringify('development')
         }),
+		new uglifyjs()
 		
-		
-    ]
+    ],
 	
 	
     devServer: {
