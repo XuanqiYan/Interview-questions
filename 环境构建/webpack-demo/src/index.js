@@ -2,34 +2,28 @@
 import './style/style1.css'
 import './style/style2.less'
 
-import _ from 'lodash' 
-import { sum } from './math'
-
-const sumRes = sum(10, 20)
-
-
-function insertDom(imgfile){
-	const img =  new Image()
-	img.src=imgfile
-	const p =  new P()
-	p.innerHTML=sumRes
-	document.body.appendChild(img)
-	document.body.appendChild(p)
+//使用日期插件 
+import moment from 'moment'
+//动态语言包加载
+import 'moment/locale/zh-cn';
+import 'moment/locale/en-au';
+if(false){
+	moment.locale('zh-cn')
+}else{
+	moment.locale('en');
 }
 
-import imgfile1 from  './img/1.png'
-import imgfile2 from  './img/2.jpeg'
-insertDom(imgfile1)
+console.log(moment(1316116057189).fromNow()); 
 
-insertDom(imgfile2)
+// setTimeout(()=>{
+// 	//异步执行
+// 	import('./test.js').then((res)=>{
+// 		console.log(res.default.message)
+// 	})
+// },3000) 
+// console.log('nice')
 
-console.log('index change')
-
-
-
-
-
-
+//import _ from 'lodash' // 100kb
 
 
 
@@ -61,10 +55,9 @@ console.log('index change')
 
 
 
-// // 增加，开启热更新之后的代码逻辑
-// if (module.hot) {
-//     module.hot.accept(['./math'], () => {
-//         const sumRes = sum(10, 30)
-//         console.log('sumRes in hot', sumRes)
-//     })
-// }
+
+
+
+
+
+

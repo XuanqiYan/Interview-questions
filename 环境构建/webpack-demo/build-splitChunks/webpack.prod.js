@@ -52,11 +52,12 @@ module.exports = smart(webpackCommonConf, {
                     MiniCssExtractPlugin.loader,  // 注意，这里不再用 style-loader
                     'css-loader',
                     'less-loader',
-                    'postcss-loader'
+                    'postcss-loader'//123456789
                 ]
             }
         ]
     },
+	
     plugins: [
         new CleanWebpackPlugin(), // 会默认清空 output.path 文件夹
         new webpack.DefinePlugin({

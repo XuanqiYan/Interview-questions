@@ -197,7 +197,8 @@ webpack 基础 （webpack-demo）
 		场景2:
 			对于MPA应用，每个都引入的三方插件 ，每次在构建的时候第三方包会被构建多次，性能浪费
 		场景3:
-			如果工具类函数库，被多个业务模块所引用，那么这个公共的函数库要单独打包
+			如果工具类函数库，被多个业务模块所引用，那么这个公共的函数库要单独打包,
+			而且只打包一次，浏览器能命中缓存
 				
 		合理的做法：
 			把第三方或者是公共的代码快包抽离出去，单独打包，第三方包只会被构建一次
@@ -230,10 +231,50 @@ webpack 基础 （webpack-demo）
 					}
 				}	
 			}	
-		
-				
-				
+	14. 懒加载
+		setTimeout(()=>{
+			//异步执行
+			import('./test.js').then((res)=>{
+				console.log(res.default.message)
+			})
+		},3000) 
 			
+	15. 优化babel-loader
+		{
+		    test: /\.js$/,
+		    loader: ['babel-loader?cacheDirectory'],// 开启缓存，只要ES6的内容没有改变，就不会重新转译会使用缓存
+		    include: srcPath,
+		    exclude: /node_modules/ //明确范围
+		}
+				
+	16. IgnorePlugin（忽略插件）
+		案例：moment.js 日期处理类库的使用
+			
+		方式：不忽略插件
+			index.js 中
+					import moment from 'moment' //加载所有语言包 
+					moment.locale('zh-cn');
+					console.log(moment(1316116057189).fromNow()); 
+					
+			npm run build  --> index 280kb 体积较大
+			
+		方式：忽略插件中的文件
+
+			index.js中手动引用语言包
+				//动态语言包加载
+					import 'moment/locale/zh-cn';
+					import 'moment/locale/en';
+					moment.locale('zh-cn');	//这是语言包
+					
+			prod.js中
+				// 忽略 moment 下的 /locale 目录
+				new webpack.IgnorePlugin(/\.\/locale/, /moment/), // moment 插件不会自动引入所有的语言包
+			
+			npm run build --> 60kb
+			
+			
+						
+	
 面试题：
 	1.前端项目为何进行打包和构建
 	2.对于webpack而言 module chunk bundle 有何区别 ？
@@ -246,7 +287,7 @@ webpack 基础 （webpack-demo）
 			chunk产生的方式：
 				1. entry
 				2. import() //异步加载的模块也会生成chunk
-				3. splitChunk	
+				3. splitChunk	//按照人为的方式把多个模块按照一定的规则抽离的出来的
 				
 		dundle : 把内存中的chunk 以文件的方式输出，这个文件就是bundle 
 			（内存-》形成文件写入磁盘）		

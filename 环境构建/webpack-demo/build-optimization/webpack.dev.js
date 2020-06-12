@@ -20,9 +20,9 @@ module.exports = smart(webpackCommonConf, {
         rules: [
             {
                 test: /\.js$/,
-                loader: ['babel-loader?cacheDirectory'],
+                loader: ['babel-loader?cacheDirectory'],//
                 include: srcPath,
-                // exclude: /node_modules/
+                exclude: /node_modules/
             },
             // 直接引入图片 url
             {
