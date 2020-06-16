@@ -8,7 +8,7 @@ const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlug
 module.exports = smart(webpackCommonConf, {
     mode: 'development',
     entry: {
-        // index: path.join(srcPath, 'index.js'),
+        //index: path.join(srcPath, 'index.js'),
         index: [
             'webpack-dev-server/client?http://localhost:8080/',
             'webpack/hot/dev-server',
@@ -25,20 +25,20 @@ module.exports = smart(webpackCommonConf, {
                 exclude: /node_modules/
             },
             // 直接引入图片 url
-            {
-                test: /\.(png|jpg|jpeg|gif)$/,
-                use: 'file-loader'
-            },
             // {
-            //     test: /\.css$/,
-            //     // loader 的执行顺序是：从后往前
-            //     loader: ['style-loader', 'css-loader']
+            //     test: /\.(png|jpg|jpeg|gif)$/,
+            //     use: 'file-loader'
             // },
             {
                 test: /\.css$/,
                 // loader 的执行顺序是：从后往前
-                loader: ['style-loader', 'css-loader', 'postcss-loader'] // 加了 postcss
+                loader: ['style-loader', 'css-loader']
             },
+            // {
+            //     test: /\.css$/,
+            //     // loader 的执行顺序是：从后往前
+            //     loader: ['style-loader', 'css-loader', 'postcss-loader'] // 加了 postcss
+            // },
             {
                 test: /\.less$/,
                 // 增加 'less-loader' ，注意顺序
@@ -63,18 +63,18 @@ module.exports = smart(webpackCommonConf, {
         hot: true,
 
         // 设置代理
-        proxy: {
-            // 将本地 /api/xxx 代理到 localhost:3000/api/xxx
-            '/api': 'http://localhost:3000',
+        // proxy: {
+        //     // 将本地 /api/xxx 代理到 localhost:3000/api/xxx
+        //     '/api': 'http://localhost:3000',
 
-            // 将本地 /api2/xxx 代理到 localhost:3000/xxx
-            '/api2': {
-                target: 'http://localhost:3000',
-                pathRewrite: {
-                    '/api2': ''
-                }
-            }
-        }
+        //     // 将本地 /api2/xxx 代理到 localhost:3000/xxx
+        //     '/api2': {
+        //         target: 'http://localhost:3000',
+        //         pathRewrite: {
+        //             '/api2': ''
+        //         }
+        //     }
+        // }
     },
     // watch: true, // 开启监听，默认为 false
     // watchOptions: {

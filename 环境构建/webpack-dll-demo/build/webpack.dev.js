@@ -4,7 +4,7 @@ const { smart } = require('webpack-merge')
 const webpackCommonConf = require('./webpack.common.js')
 const { srcPath, distPath } = require('./paths')
 
-// 第一，引入 DllReferencePlugin
+// 第一 引入 DllReferencePlugin
 const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
 
 module.exports = smart(webpackCommonConf, {
@@ -24,7 +24,7 @@ module.exports = smart(webpackCommonConf, {
             // window.ENV = 'production'
             ENV: JSON.stringify('development')
         }),
-        // 第三，告诉 Webpack 使用了哪些动态链接库
+        // 第三 告诉 Webpack 使用了哪些动态链接库
         new DllReferencePlugin({
             // 描述 react 动态链接库的文件内容
             manifest: require(path.join(distPath, 'react.manifest.json')),

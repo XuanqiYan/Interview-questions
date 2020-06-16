@@ -268,12 +268,136 @@ webpack 基础 （webpack-demo）
 					
 			prod.js中
 				// 忽略 moment 下的 /locale 目录
+				
 				new webpack.IgnorePlugin(/\.\/locale/, /moment/), // moment 插件不会自动引入所有的语言包
 			
 			npm run build --> 60kb
 			
+	17.多进程打包	（进程/线程）	
+		程序（任务/软件）--》进程
+			创建：计算机分配内存和cpu来运行程序
+			运行：利用cup 和内存 计算
+				开启多个线程（子进程） 线程之间是可以共享数据的		
+			回收：进程结束和回收cup 和内存
 			
-						
+		特点：由于进程数据不共享，如果开启多进程导打包，
+			优点：
+				对于大的项目来说（100M）开启10个进程打包理论上来说会提升10倍的打包速率。
+				但是实际上，多进程打包会有其他消耗，如下：
+			缺点：
+				1.会有进程间通信消耗打包速率
+				2.进程创建和销毁也都会消耗打包速率
+				3.如果同时创建的进程越多，以上两点的消耗越大
+				
+			总结：
+				项目体积较大，建议开启多进程打包。
+				项目体积较小，不建议，因为多进程打包的缺点要比优点影响大	
+			
+		webpack 多进程打包配置
+			1.下载并引入happypack
+				const HappyPack = require('happypack')
+			2.处理 js loader
+			{
+			    test: /\.js$/,
+			    // 把对 .js 文件的处理转交给 id 为 babel 的 HappyPack 实例
+				use: ['happypack/loader?id=babel'],
+			    include: srcPath, 
+			},
+			
+			3.配置plugin
+				// happyPack 开启多进程打包
+				new HappyPack({
+				    // 用唯一的标识符 id 来代表当前的 HappyPack 是用来处理一类特定的文件
+				    id: 'babel',
+				     // 如何处理 .js 文件，用法和 Loader 配置中一样
+				   
+					loaders: ['babel-loader?cacheDirectory']
+				})
+			
+			4.针对多进程打包js压缩
+				a.下载引入 webpack-parallel-uglify-plugin
+					const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+					
+				b.设置线上模式 
+					mode:production
+					
+				c.配置.babelrc	
+					在根目录下新建.babelrc文件（babel的配置文件 ）
+							{
+							    "presets": ["@babel/preset-env"],
+							    "plugins": []
+							}
+				d.配置
+					new ParallelUglifyPlugin({
+					    // 传递给 UglifyJS 的参数
+					    // 还是使用 UglifyJS （webpack内置）压缩，只不过帮助开启了多进程）
+					    uglifyJS: {
+					        output: {
+					            beautify: false, // 最紧凑的输出
+					            comments: false, // 删除所有的注释
+					        },
+					        compress: {
+					            // 删除所有的 `console` 语句，可以兼容ie浏览器
+					            drop_console: true,
+					            // 内嵌定义了但是只用到一次的变量
+					            collapse_vars: true,
+					            // 提取出出现多次但是没有定义成变量去引用的静态值
+					            reduce_vars: true,
+					        }
+					    }
+					})
+					
+			测试：
+				npm  run build
+				/*
+					
+					console.log('this is a test')  
+
+					let str = 'zhangsan'
+					document.write(`my name is ${str}`)
+
+
+					import math from './math.js'
+
+					document.write('age:'+ math.age)
+					document.write('age1:'+ math.age)
+					document.write('age2:'+ math.age)
+
+					/*
+						document.write("my name is ".concat("zhangsan")),
+						document.write("age:21"),
+						document.write("age1:21"),
+						document.write("age2:21")
+					*/
+
+
+				*/	
+			   
+	18 热刷新 VS 热更新
+		热刷新
+			特点：
+				只要代码改变，整个网页会重新刷新,带来好多负作用
+				加载dom,渲染页面,网页内部的请求重新发起
+				变量和定义的状态值丢失(input输入的值),路由信息全部丢失
+		热更新
+			特点：改变代码，布局刷新而不是整个页面刷新，状态不丢失，
+				 但是热跟新是需要成本的,手动监听js的跟新模块
+				
+				
+			配置：
+				1.下载并倒入
+					const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
+				2.修改打包的入口文件
+					index: [
+					    'webpack-dev-server/client?http://localhost:8080/',
+					    'webpack/hot/dev-server',
+					    path.join(srcPath, 'index.js')
+					]
+				3.使用plugin
+					 new HotModuleReplacementPlugin()	
+				4.devServer 开启 hot:true	 
+				
+				
 	
 面试题：
 	1.前端项目为何进行打包和构建
@@ -298,6 +422,7 @@ webpack 基础 （webpack-demo）
 	6.babel-polyfill 和 babel-runtime 模式有何区别？
 	
 
+	
 	
 	
 	

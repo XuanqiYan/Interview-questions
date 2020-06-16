@@ -8,9 +8,9 @@ module.exports = {
         other: path.join(srcPath, 'other.js')
     },
     module: {
-        rules: [
-            // babel-loader
-        ]
+        // rules: [
+        //     // babel-loader
+        // ]
     },
     plugins: [
         // new HtmlWebpackPlugin({
