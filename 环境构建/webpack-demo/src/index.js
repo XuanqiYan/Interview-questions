@@ -1,22 +1,29 @@
-import './style/style1.css'
-import './style/style2.less'
+// import './style/style1.css'
+// import './style/style2.less'
 
 
-import { sum } from './math.js'
+// import { mult } from './math.js'
 
-const sumRes =  sum(10,100)
+// const sumRes =  mult(10,100)
 
-console.log(sumRes)
+// console.log(sumRes)
 
-//开启热跟新后
-if(module.hot){
-	//热跟新设置监听模块
-	module.hot.accept(['./math.js'],()=>{
-		//只要 math.js模块改变执行这个回调 
-		const sumRes1 = sum(10,20)
-		console.log('sumRes1:',sumRes1)
+if(true){
+	import('./mult.then(res =>{
+		const sum =res.default.sum(10,20)
+		console.log(sum)
 	})
 }
+
+//开启热跟新后
+// if(module.hot){
+// 	//热跟新设置监听模块
+// 	module.hot.accept(['./math.js'],()=>{
+// 		//只要 math.js模块改变执行这个回调 
+// 		const sumRes1 = sum(10,20)
+// 		console.log('sumRes1:',sumRes1)
+// 	})
+// }
 
 
 

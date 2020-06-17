@@ -6,7 +6,7 @@ const { smart } = require('webpack-merge')
 const { srcPath, distPath } = require('./paths')
 
 module.exports = smart(webpackCommonConf, {
-    mode: 'development',
+    mode: 'none',
     module: {
         rules: [
             // 直接引入图片 url

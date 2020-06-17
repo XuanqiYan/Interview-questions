@@ -29,6 +29,10 @@ module.exports = smart(webpackCommonConf, {
             // 描述 react 动态链接库的文件内容
             manifest: require(path.join(distPath, 'react.manifest.json')),
         }),
+		new DllReferencePlugin({
+		    // 描述 lodash 动态链接库的文件内容
+		    manifest: require(path.join(distPath, 'lodash.manifest.json')),
+		}),
     ],
     devServer: {
         port: 8080,

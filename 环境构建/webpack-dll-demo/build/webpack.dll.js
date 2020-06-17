@@ -7,7 +7,8 @@ module.exports = {
   // JS 执行入口文件
   entry: {
     // 把 React 相关模块的放到一个单独的动态链接库
-    react: ['react', 'react-dom']
+    react: ['react', 'react-dom'],
+	lodash:['lodash']
   },
   output: {
     // 输出的动态链接库的文件名称，[name] 代表当前动态链接库的名称，

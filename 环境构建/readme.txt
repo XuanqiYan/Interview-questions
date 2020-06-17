@@ -397,7 +397,94 @@ webpack 基础 （webpack-demo）
 					 new HotModuleReplacementPlugin()	
 				4.devServer 开启 hot:true	 
 				
+	19 DllPlugin (动态链接库插件)
+		场景：
+			1. 对于体积较大的插件（vue / react） 构建速度很慢
+			2. 一般这些插件还比较稳定
+			3. 每次编写代码，重复构建，vue/react也会被重复构建 ，splitChunks并不会提升构建速度，
+				只是能利用hash的特性提升浏览器的运行效率，因为会命中缓存
 				
+		如何抽离动态链接资源
+			 
+				script:{
+					  "dll": "webpack --config build/webpack.dll.js"
+				}
+				执行项目构建之前先要执行 npm run dll 生成动态链接资源
+				
+				将构建链接资源 加载到模板中
+				<script src="./lodash.dll.js"></script>
+				<script src="./react.dll.js"></script>
+				
+				配置webpack.dll.js
+					....
+					
+				
+			
+		项目构建的时候配置使用动态链接资源
+			//1.引入 DllReferencePlugin
+					const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
+		
+			//2. exclude: /node_modules/ // 不要再转换 node_modules 的代码
+			
+			//3. 申明使用那些动态链接库资源（插件的形式）
+				plugins:[
+					new DllReferencePlugin({
+						// 描述 react 动态链接库的文件内容
+						manifest: require(path.join(distPath, 'react.manifest.json')),
+					}),
+					new DllReferencePlugin({
+						// 描述 lodash 动态链接库的文件内容
+						manifest: require(path.join(distPath, 'lodash.manifest.json')),
+					})
+						
+				]
+				
+	20 tree-shaking (摇树叶)
+		定义模块math.js
+			export const sum = (a,b)=>{
+				return a+b
+			}
+			export const mult = (a,b)=>{
+				return a*b
+			}
+		使用 index.js	
+			import {sum} from 'math.js'
+			import _ from 'lodash'
+			
+			sum(1,2)
+			_.drop([1,2,3,4,5],2)
+			
+		tree-shaking 
+			注意：
+				只有是ES6 导出的模块才能tree-shaking 分析 ，原因Es6的模块都是静态导入
+				如果是commonjs导出的模块tree-shaking 不会分析，因为commonjs导出的模块是运行时加载
+				
+			作用：
+				可以把没有用到的代码剥离出去 ，没有用到的代码在构建的时候不会构建进去
+				可以提升构建速度和项目运行速度
+			开启：
+				mode:'production' --> 默认开启
+				mode:'none / development' --> 默认不开启	
+					
+			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 面试题：
 	1.前端项目为何进行打包和构建
