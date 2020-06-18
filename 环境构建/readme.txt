@@ -268,7 +268,6 @@ webpack 基础 （webpack-demo）
 					
 			prod.js中
 				// 忽略 moment 下的 /locale 目录
-				
 				new webpack.IgnorePlugin(/\.\/locale/, /moment/), // moment 插件不会自动引入所有的语言包
 			
 			npm run build --> 60kb
@@ -382,8 +381,7 @@ webpack 基础 （webpack-demo）
 		热更新
 			特点：改变代码，布局刷新而不是整个页面刷新，状态不丢失，
 				 但是热跟新是需要成本的,手动监听js的跟新模块
-				
-				
+					
 			配置：
 				1.下载并倒入
 					const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
@@ -417,9 +415,7 @@ webpack 基础 （webpack-demo）
 				
 				配置webpack.dll.js
 					....
-					
-				
-			
+						
 		项目构建的时候配置使用动态链接资源
 			//1.引入 DllReferencePlugin
 					const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
@@ -466,10 +462,48 @@ webpack 基础 （webpack-demo）
 				mode:'production' --> 默认开启
 				mode:'none / development' --> 默认不开启	
 					
-			
+	21: 模式：
+			生产模式（production）,webpack会默认开启：
+				FlagIncludedChunksPlugin: 检测并标记模块之间的从属关系。
+				ModuleConcatenationPlugin: 开启scope hosting ,减少函数作用域
+				SideEffectsFlagPlugin: 告诉webapck去清除一个大的模块文件中的未使用的代码，这个大的文件模块可以是自定义的，也可以是第三方的（注意：一定要`package.json`文件中添加`"sideEffects": false`）。
+				OccurrenceOrderPlugin: 告诉webapck各个模块间的先后顺序，这样可以实现最优的构建输出。
+				UglifyJsPlugin： 压缩模块
 	
+	22 cnd:
+			使用自己压缩的dll文件（动态链接库）
+				<script src="./vue.dll.js"></script>
+			使用网上的cdn	
+				<script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.0-beta.15/vue.cjs.js	"></script>
+				
+				https://cdn.bootcdn.net/ajax/libs/vue/3.0.0-beta.15/vue.cjs.js
+					cjs ：以commonjs方式导出的vue
+					module.exports = {
+						}
+					//使用
+					const vue = require('vue')
+				https://cdn.bootcdn.net/ajax/libs/vue/3.0.0-beta.15/vue.esm-browser.js
+					esm：以es6 module导出的vue
+						export default {}
+					//使用	
+					import vue from 'vue'
+	23:懒加载
+		import a from 'a'
+		import c from 'c'
+		if(){
+			//异步
+			import('b').then(res=>{
+				res.default
+			})
+		}
+				
+	24: scope hosting:
+		实现原理:
+			分析出模块之间的依赖关系，尽可能的把打散的模块合并到一个函数中去，
+			但前提是不能造成代码冗余 因此只有那些被引用了一次的模块才能被合并
+			由于Scope Hoisting需要分析出模块之间的依赖关系，因此源码必须采用ES6模块化语句，不然它将无法生效。
 	
-	
+				
 	
 	
 	
